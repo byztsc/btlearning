@@ -56,4 +56,30 @@ class User extends Authenticatable
             ? Str::substr($initials, 0, 1).Str::substr($initials, -1)
             : $initials;
     }
+    public function isTeacher(): bool
+    {
+        return $this->role === 'teacher';
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->role === 'student';
+    }
+
+    // Öğrencinin kayıtlı olduğu dersler
+    public function enrolledCourses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Course::class)->withTimestamps();
+    }
+
+    // Öğretmenin verdiği dersler
+    public function taughtCourses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    public function announcements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Announcement::class);
+    }
 }
