@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap');
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
 
@@ -10,6 +11,18 @@
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Fraunces', ui-serif, Georgia, serif;
+
+    /* BTlearning paleti */
+    --color-cream: #FBF8F3;
+    --color-ink: #2B2440;
+    --color-plum: #4A3F6B;
+    --color-plum-soft: #8A7FB0;
+    --color-lavender: #DCD0F2;
+    --color-mint: #CDEBDC;
+    --color-peach: #F9DCC6;
+    --color-sky: #CFE3F4;
+    --color-rose: #F5D1DA;
 
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
@@ -23,21 +36,21 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    /* Butonlar ve seçili menü rengi: mürdüm */
+    --color-accent: var(--color-plum);
+    --color-accent-content: var(--color-plum);
     --color-accent-foreground: var(--color-white);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: var(--color-lavender);
+        --color-accent-content: var(--color-lavender);
+        --color-accent-foreground: var(--color-ink);
     }
 }
 
 @layer base {
-
     *,
     ::after,
     ::before,
@@ -52,7 +65,7 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
@@ -60,7 +73,3 @@ textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
