@@ -11,21 +11,25 @@ class Course extends Model
 {
     protected $fillable = ['teacher_id', 'title', 'slug', 'description', 'color'];
 
+    /** @return BelongsTo<User, $this> */
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
+    /** @return BelongsToMany<User, $this> */
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
+    /** @return HasMany<Material, $this> */
     public function materials(): HasMany
     {
         return $this->hasMany(Material::class);
     }
 
+    /** @return HasMany<Announcement, $this> */
     public function announcements(): HasMany
     {
         return $this->hasMany(Announcement::class);

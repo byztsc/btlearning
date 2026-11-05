@@ -9,6 +9,7 @@ class Material extends Model
 {
     protected $fillable = ['course_id', 'title', 'description', 'type', 'file_path', 'url'];
 
+    /** @return BelongsTo<Course, $this> */
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);

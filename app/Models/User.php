@@ -6,6 +6,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -16,6 +18,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string $role
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $two_factor_secret
@@ -56,6 +59,7 @@ class User extends Authenticatable
             ? Str::substr($initials, 0, 1).Str::substr($initials, -1)
             : $initials;
     }
+
     public function isTeacher(): bool
     {
         return $this->role === 'teacher';
@@ -66,19 +70,28 @@ class User extends Authenticatable
         return $this->role === 'student';
     }
 
-    // Öğrencinin kayıtlı olduğu dersler
-    public function enrolledCourses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    /**
+     * Öğrencinin kayıtlı olduğu dersler
+     *
+     * @return BelongsToMany<Course, $this>
+     */
+    public function enrolledCourses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class)->withTimestamps();
     }
 
-    // Öğretmenin verdiği dersler
-    public function taughtCourses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    /**
+     * Öğretmenin verdiği dersler
+     *
+     * @return HasMany<Course, $this>
+     */
+    public function taughtCourses(): HasMany
     {
         return $this->hasMany(Course::class, 'teacher_id');
     }
 
-    public function announcements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    /** @return HasMany<Announcement, $this> */
+    public function announcements(): HasMany
     {
         return $this->hasMany(Announcement::class);
     }
